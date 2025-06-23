@@ -19,15 +19,71 @@ rbtree *new_rbtree(void) {
 }
 
 // 트리 좌회전용 함수
-void left_rotate(rbtree *t,node_t *new)
+void left_rotate(rbtree *t,node_t *x)
 {
+  //new 를 중심축으로 회전 예정
+  node_t *y = x->right;
+  x->right = y->left;
+  
+  if (y->left != t->nil) //Y 의 왼쪽 서브트리가 비어있지 않을때
+  {
+    y->left->parent = x; // x는 서브트리 루트의 부모가 됨
+  }
+
+  // new의 부모 (Z) 가 y의 부모가 된다.
+  y->parent = x->parent;
+
+  if (x->parent == t->nil) //new가 루트인 경우
+  {
+    t->root = y; //y가 루트가 됨
+  }
+
+  else if ( x == x->parent->left) //x가 왼쪽 자식인 경우
+  {
+    x->parent->left = y; //왼쪽 회전되면서 y가 왼쪽 자식이됨
+  }
+
+  else // x가 오른쪽 자식이었던 경우
+  {
+    x->parent->right = y; 
+  }
+
+  y->left = x;
+  x->parent = y; 
 
 }
 
-//트리 우회전용 함수
-void right_rotate(rbtree *t,node_t *new)
+//트리 우회전용 함수 - left_rotate 에서 (left,right)만 바꿈
+void right_rotate(rbtree *t,node_t *x)
 {
+  // x 를 중심축으로 회전 예정
+  node_t *y = x->left;            // (1) 축 노드 x의 왼쪽 자식 y 확보
+  x->left = y->right;             // (2) y의 오른쪽 서브트리(β)를 x의 왼쪽으로 이동
 
+  if (y->right != t->nil)         // (3) y의 오른쪽 자식이 존재할 경우
+  {
+    y->right->parent = x;         // β의 부모를 x로 연결
+  }
+
+  y->parent = x->parent;          // (4) x의 부모를 y가 대신하게 함
+
+  if (x->parent == t->nil)        // (5) x가 루트였던 경우
+  {
+    t->root = y;                  // y가 새로운 루트가 됨
+  }
+
+  else if (x == x->parent->right) // (6) x가 오른쪽 자식이었다면
+  {
+    x->parent->right = y;         // 부모의 오른쪽에 y 연결
+  }
+
+  else                            // (7) x가 왼쪽 자식이었다면
+  {
+    x->parent->left = y;          // 부모의 왼쪽에 y 연결
+  }
+
+  y->right = x;                   // (8) x는 y의 오른쪽 자식이 됨
+  x->parent = y;                  // (9) x의 부모를 y로 설정
 
 }
 
