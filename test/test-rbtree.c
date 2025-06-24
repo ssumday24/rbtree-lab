@@ -266,6 +266,7 @@ void test_color_constraint(const rbtree *t) {
 }
 
 // rbtree should keep search tree and color constraints
+// 트리의 제약 조건을 잘 지키는지 검사함수
 void test_rb_constraints(const key_t arr[], const size_t n) {
   rbtree *t = new_rbtree();
   assert(t != NULL);
@@ -310,6 +311,7 @@ void test_to_array_suite() {
   delete_rbtree(t);
 }
 
+// 삽입, 탐색, 삭제가 제대로 동작하는지 테스트  - ERASE 구현돼있어야함
 void test_find_erase(rbtree *t, const key_t *arr, const size_t n) {
   for (int i = 0; i < n; i++) {
     node_t *p = rbtree_insert(t, arr[i]);
@@ -370,14 +372,14 @@ void test_find_erase_rand(const size_t n, const unsigned int seed) {
 int main(void) {
   test_init();
   test_insert_single(1024);
-  //test_find_single(512, 1024);
-  //test_erase_root(128);
-  //test_find_erase_fixed();
-  //test_minmax_suite();
-  //test_to_array_suite();
-  //test_distinct_values();
-  //test_duplicate_values();
-  //test_multi_instance();
-  //test_find_erase_rand(10000, 17);
+  test_find_single(512, 1024);
+  test_erase_root(128);              //rbtree_erase 구현 후 테스트
+  test_find_erase_fixed();           //rbtree_erase 구현 후 테스트
+  test_minmax_suite();               //rbtree_erase 구현 후 테스트
+  test_to_array_suite();
+  test_distinct_values();
+  test_duplicate_values();
+  test_multi_instance();            //rbtree_to_array 구현 후 테스트
+  test_find_erase_rand(10000, 17);  //rbtree_to_array 구현 후 테스트
   printf("Passed all tests!\n");
 }
