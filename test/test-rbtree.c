@@ -360,7 +360,8 @@ void test_find_erase_rand(const size_t n, const unsigned int seed) {
   rbtree *t = new_rbtree();
   key_t *arr = calloc(n, sizeof(key_t));
   for (int i = 0; i < n; i++) {
-    arr[i] = rand();
+    arr[i] = i;
+    //arr[i] = rand();
   }
 
   test_find_erase(t, arr, n);
