@@ -254,7 +254,8 @@ node_t *rbtree_insert(rbtree *t, const key_t key) {
 
   // 레드블랙트리 속성 위반 수정
   rbtree_insert_fixup(t,new);
-  return t->root;
+  //return t->root; 반환값 new로 해야함
+  return new;
 }
 
 node_t *rbtree_find(const rbtree *t, const key_t key) {
@@ -284,7 +285,7 @@ node_t *rbtree_min(const rbtree *t) {
 
     cur = cur->left; //왼쪽으로 이동
   }
-  return t->nil; 
+  return NULL; 
 }
 
 node_t *rbtree_max(const rbtree *t) {
@@ -297,7 +298,7 @@ node_t *rbtree_max(const rbtree *t) {
 
     cur = cur->right; //왼쪽으로 이동
   }
-  return t->nil;
+  return NULL;
 }
 /////////////////////////////////////////////////////////////////////
 
@@ -443,7 +444,7 @@ int rbtree_erase(rbtree *t, node_t *z) {
 
   if (y_original_color == RBTREE_BLACK) 
   {
-    rbtree_delete_fixup(t, x);
+    rbtree_erase_fixup(t, x);
   }
   
   return 0;
