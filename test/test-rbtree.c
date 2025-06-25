@@ -361,7 +361,7 @@ void test_find_erase_rand(const size_t n, const unsigned int seed) {
   key_t *arr = calloc(n, sizeof(key_t));
   for (int i = 0; i < n; i++) {
     arr[i] = i;
-    //arr[i] = rand();
+    //arr[i] = rand();  // 중복 키 삽입 과정에서 문제 발생
   }
 
   test_find_erase(t, arr, n);
