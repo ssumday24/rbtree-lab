@@ -447,6 +447,10 @@ int rbtree_erase(rbtree *t, node_t *z) {
     rbtree_erase_fixup(t, x);
   }
   
+  if (z != y) {
+    free(z);  // z와 y가 다를 때만 z 해제
+  }
+  free(y);    // y는 항상 해제 (z와 같아도 한 번만)
 
   return 0;
 }
