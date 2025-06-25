@@ -380,6 +380,6 @@ int main(void) {
   test_distinct_values();
   test_duplicate_values();
   test_multi_instance();            //rbtree_to_array 구현 후 테스트
-  //test_find_erase_rand(10000, 17);  //rbtree_to_array 구현 후 테스트
+  test_find_erase_rand(10000, 17);  //rbtree_to_array 구현 후 테스트
   printf("Passed all tests!\n");
 }
