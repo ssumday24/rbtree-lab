@@ -270,7 +270,8 @@ node_t *rbtree_find(const rbtree *t, const key_t key) {
     else // 찾는값이 더 크다면 오른쪽 이동
       cur = cur ->right; 
   }
-  return t->nil; //찾는 값이 없으면 NIL 반환
+  //return t->nil; //찾는 값이 없으면 NIL 반환
+  return NULL;
 }
 
 node_t *rbtree_min(const rbtree *t) {
@@ -302,7 +303,7 @@ node_t *rbtree_max(const rbtree *t) {
 
 //erase 후 규칙 위반 수정 함수
 void rbtree_erase_fixup(rbtree *t, node_t *new)
-
+{
   while (new != t->root && new->color == RBTREE_BLACK) {
     if (new == new->parent->left) {
       node_t *w = new->parent->right; // 형제 노드
@@ -448,36 +449,36 @@ int rbtree_erase(rbtree *t, node_t *z) {
   return 0;
 }
 
+//rbtree_to_array에 쓰인 중위순회 함수
+void inorder(const rbtree *t, const node_t *node, key_t *arr, size_t n, size_t *idx) 
+{
+    // nil 일때 base case,  idx>=n 일때 예외처리 
+    if (node == t->nil || *idx >= n) 
+        return;
 
-int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n) {
-  
-  // 중위순회를 이용하여 트리의 값을 오름차순으로 arr에 저장하는 함수
-
-  // 내부적으로 사용할 중위순회 함수 정의
-  void inorder(const rbtree *t, const node_t *node, key_t *arr, size_t n, size_t *idx) {
-    if (node == t->nil || *idx >= n) {
-      return;
-    }
     inorder(t, node->left, arr, n, idx);
-    if (*idx < n) {
-      arr[*idx] = node->key;
-      (*idx)++;
+
+    //포인터가 쓰인 이유 : 함수내에서 idx 증가시키고, 그 값을 다시 인자로 전달위해
+    //포인터변수가 아니었다면 함수가 끝나면 증가된 값이 사라짐 
+    if (*idx < n) //인덱스 out of range 체크
+    {
+        arr[*idx] = node->key;
+        (*idx)++;
     }
+
     inorder(t, node->right, arr, n, idx);
-  }
+}
 
-  if (t == NULL || arr == NULL || n == 0) {
+int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n) 
+{
+  // 중위순회를 이용하여 트리의 값을 오름차순으로 arr에 저장
+
+  if (t == NULL || arr == NULL || n == 0) 
     return 0;
-  }
-
+      
   size_t idx = 0;
+
   inorder(t, t->root, arr, n, &idx);
 
-
-
-
-
-
-  
-  return 0;
+  return 0;  // 또는 실제 저장된 요소 개수를반환
 }
