@@ -447,6 +447,15 @@ int rbtree_erase(rbtree *t, node_t *z) {
     rbtree_erase_fixup(t, x);
   }
   
+// 안전하게 메모리 해제
+  if (y != z) {
+    free(z);
+    free(y);
+  } else {
+    free(z);
+  }
+
+
 
   return 0;
 }
