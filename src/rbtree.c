@@ -447,13 +447,6 @@ int rbtree_erase(rbtree *t, node_t *z) {
     rbtree_erase_fixup(t, x);
   }
   
-  // 삭제된 노드 메모리 해제
-  if (z != y) {
-    free(z);  // z와 y가 다를 때만 z 해제
-  }
-  // y는 트리에서 제거되었으므로 해제
-  free(y);
-
 
   return 0;
 }
