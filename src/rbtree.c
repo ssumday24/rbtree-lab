@@ -447,6 +447,8 @@ int rbtree_erase(rbtree *t, node_t *z) {
     rbtree_erase_fixup(t, x);
   }
   
+  //삭데된 메모리 해제
+  free(z); 
   return 0;
 }
 
